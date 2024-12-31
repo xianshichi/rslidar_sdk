@@ -48,16 +48,10 @@ jobs:
           source /opt/ros/noetic/setup.bash
           bash create_debian.sh
           mkdir output
-          mv ../*.deb output/
-          echo "CURRENT_DIR=$(pwd)" >> $GITHUB_ENV
-          
-      # 打印当前目录
-      - name: Print current directory
-        run: |
-          echo "Current directory is: $CURRENT_DIR"
+          mv ../*.deb /
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.5.0
         with:
           name: my-artifact
-          path: $CURRENT_DIR/output/*.deb
+          path: /*.deb
