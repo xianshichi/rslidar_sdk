@@ -16,12 +16,6 @@ jobs:
       image: ros:noetic-ros-core  # 使用预装了 ROS Core 的官方镜像
 
     steps:
-      # 检出代码
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-        with:
-          submodules: recursive  # 递归更新所有子模块
-
       - name: Install Act dependencies
         if: ${{ env.ACT }}
         run: |
@@ -29,9 +23,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update && sudo apt-get install curl build-essential -y
+          sudo apt-get update && sudo apt-get install curl build-essential git -y
           sudo apt-get install python3-rosdep libyaml-cpp-dev libpcap-dev dh-make -y
           rm /bin/sh && ln -s /bin/bash /bin/sh
+
+      # 检出代码
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          submodules: recursive  # 递归更新所有子模块
+
 
       # 安装 ROS 依赖
       - name: Install ROS dependencies
