@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-## install the python-bloom fakeroot
+## install the python3-bloom fakeroot
 
 function install_pkg()
 {
@@ -14,7 +14,7 @@ function install_pkg()
   fi
 }
 
-install_pkg python-bloom
+install_pkg python3-bloom
 install_pkg fakeroot
 
 echo -e "\n\033[1;32m ~~ (1). Delete old debian folders in the directory...\033[0m"
