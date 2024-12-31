@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update && sudo apt-get install curl build-essential -y
-          sudo apt-get install python3-rosdep libyaml-cpp-dev libpcap-dev -y
+          sudo apt-get install python3-rosdep libyaml-cpp-dev libpcap-dev dh-make -y
           rm /bin/sh && ln -s /bin/bash /bin/sh
 
       # 安装 ROS 依赖
@@ -44,7 +44,7 @@ jobs:
         run: |
           source /opt/ros/noetic/setup.bash
           bash create_debian.sh
-          
+
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.5.0
         with:
