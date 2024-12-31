@@ -1,0 +1,63 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    container:
+      image: ros:noetic-ros-core  # 使用预装了 ROS Core 的官方镜像
+
+    steps:
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Act dependencies
+        if: ${{ env.ACT }}
+        run: |
+          apt-get update && apt-get install sudo -y
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install curl build-essential -y
+          sudo apt-get install python3-rosdep libyaml-cpp-dev libpcap-dev -y
+          rm /bin/sh && ln -s /bin/bash /bin/sh
+
+      # 安装 ROS 依赖
+      - name: Install ROS dependencies
+        run: |
+          source /opt/ros/noetic/setup.bash
+          rosdep init || true
+          rosdep update
+          rosdep install --from-paths src --ignore-src -r -y
+
+      # 构建项目
+      - name: Build the project
+        run: |
+          source /opt/ros/noetic/setup.bash
+          bash create_debian.sh
+          
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.5.0
+        with:
+          name: my-artifact
+          path: ../*.deb
+#          mkdir -p build
+#          cd build
+#          cmake ..
+#          make -j$(nproc)
+
+#      # 运行测试
+#      - name: Run tests
+#        run: |
+#          source /opt/ros/noetic/setup.bash
+#          cd build
+#          ctest --output-on-failure

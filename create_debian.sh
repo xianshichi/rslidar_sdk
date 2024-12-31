@@ -18,7 +18,7 @@ install_pkg python-bloom
 install_pkg fakeroot
 
 echo -e "\n\033[1;32m ~~ (1). Delete old debian folders in the directory...\033[0m"
-rm -rf debian/ obj-x86_64-linux-gnu/
+rm -rf debian/ .obj-x86_64-linux-gnu/
 
 echo -e "\n\033[1;32m ~~ (2). Delete any backup files...\033[0m"
 find . -type f -name '*~' -delete
@@ -41,7 +41,7 @@ sed  -i "s#${target_string}#${replace_string}#g" debian/rules
 fakeroot debian/rules binary
 
 echo -e "\n\033[1;32m ~~ (4). Delete old debian folders in the directory...\033[0m"
-rm -rf debian/ obj-x86_64-linux-gnu/
+rm -rf debian/ .obj-x86_64-linux-gnu/
 
 echo -e "\n\033[1;32m ~~ (5). Delete any backup files...\033[0m"
 find . -type f -name '*~' -delete
