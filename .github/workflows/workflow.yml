@@ -17,8 +17,10 @@ jobs:
 
     steps:
       # 检出代码
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          submodules: recursive  # 递归更新所有子模块
 
       - name: Install Act dependencies
         if: ${{ env.ACT }}
